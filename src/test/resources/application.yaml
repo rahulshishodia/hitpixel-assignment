@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: hitpixel-assignment
+  datasource:
+    name: default
+    url: jdbc:h2:mem:default
+    username: admin
+    password: password
+    driver-class-name: org.h2.Driver
+    embedded-database-connection: h2
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        enable_lazy_load_no_trans: true
+  liquibase:
+    enabled: false
+
+logging:
+  level:
+    root: ERROR
+
+hitpixel:
+  jwt:
+    expires-in-seconds: 3600
+    signing-key: 363308a8d7f6452db567d996256b9dc8db431f4d9ffbfb119ecc8ee61ad4b5db987c8d81950efdf7c44a69ef04a170f1b4c87a1eb8d8ae0040d565e1c27487b7

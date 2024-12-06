@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration>
+    <appender name="mask" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+            <layout class="net.rahuls.hitpixel.core.log.MaskingLayout">
+                <pattern>[%d{ISO8601,UTC}] - [%5p] [%X{traceId}, %X{spanId}] [%thread] %c{1}:%L - %m%n%rootException</pattern>
+            </layout>
+        </encoder>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="mask" />
+    </root>
+</configuration>

@@ -1,0 +1,25 @@
+spring:
+  datasource:
+    name: default
+    url: jdbc:h2:file:./.db/default;AUTO_SERVER=TRUE;MODE=LEGACY;INIT=CREATE SCHEMA IF NOT EXISTS HITPIXEL;
+    username: admin
+    password: password
+    driver-class-name: org.h2.Driver
+    embedded-database-connection: h2
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        default_schema: hitpixel
+        enable_lazy_load_no_trans: true
+  liquibase:
+    enabled: true
+    drop-first: true
+    change-log: classpath:db/changelog/changelog.xml
+    default-schema: hitpixel
+
+hitpixel:
+  jwt:
+    expires-in-seconds: 3600
+    signing-key: ${JWT_SIGNING_KEY}

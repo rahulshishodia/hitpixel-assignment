@@ -1,0 +1,168 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.29.xsd"
+        objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
+
+    <changeSet id="1733378536114-1"
+               author="rahul.shishodia">
+        <createTable tableName="roles">
+            <column name="name"
+                    type="VARCHAR(20)">
+                <constraints nullable="false"
+                             primaryKey="true"
+                             primaryKeyName="pk_roles"/>
+            </column>
+            <column name="description"
+                    type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="1733378536114-2"
+               author="rahul.shishodia">
+        <createTable tableName="transactions">
+            <column autoIncrement="true"
+                    name="id"
+                    type="BIGINT">
+                <constraints nullable="false"
+                             primaryKey="true"
+                             primaryKeyName="pk_transactions"/>
+            </column>
+            <column name="user_id"
+                    type="BIGINT"/>
+            <column name="amount"
+                    type="DECIMAL">
+                <constraints nullable="false"/>
+            </column>
+            <column name="currency"
+                    type="VARCHAR(3)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="payment_method"
+                    type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status"
+                    type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at"
+                    type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_updated_at"
+                    type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="1733378536114-3"
+               author="rahul.shishodia">
+        <createTable tableName="user_roles">
+            <column name="role_id"
+                    type="VARCHAR(20)">
+                <constraints nullable="false"
+                             primaryKey="true"
+                             primaryKeyName="pk_user_roles"/>
+            </column>
+            <column name="user_id"
+                    type="BIGINT">
+                <constraints nullable="false"
+                             primaryKey="true"
+                             primaryKeyName="pk_user_roles"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="1733378536114-4"
+               author="rahul.shishodia">
+        <createTable tableName="users">
+            <column autoIncrement="true"
+                    name="id"
+                    type="BIGINT">
+                <constraints nullable="false"
+                             primaryKey="true"
+                             primaryKeyName="pk_users"/>
+            </column>
+            <column name="username"
+                    type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="full_name"
+                    type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email"
+                    type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password"
+                    type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="enabled"
+                    type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="credentials_non_expired"
+                    type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="account_non_locked"
+                    type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="account_non_expired"
+                    type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at"
+                    type="DATETIME"/>
+            <column name="updated_at"
+                    type="DATETIME"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="1733378536114-5"
+               author="rahul.shishodia">
+        <addUniqueConstraint columnNames="email"
+                             constraintName="uc_users_email"
+                             tableName="users"/>
+    </changeSet>
+    <changeSet id="1733378536114-6"
+               author="rahul.shishodia">
+        <addUniqueConstraint columnNames="username"
+                             constraintName="uc_users_username"
+                             tableName="users"/>
+    </changeSet>
+    <changeSet id="1733378536114-8"
+               author="rahul.shishodia">
+        <addForeignKeyConstraint baseColumnNames="user_id"
+                                 baseTableName="transactions"
+                                 constraintName="FK_TRANSACTIONS_ON_USER"
+                                 referencedColumnNames="id"
+                                 referencedTableName="users"/>
+
+        <createIndex indexName="idx_transaction_user_id"
+                     tableName="transactions">
+            <column name="user_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet id="1733378536114-9"
+               author="rahul.shishodia">
+        <addForeignKeyConstraint baseColumnNames="role_id"
+                                 baseTableName="user_roles"
+                                 constraintName="fk_userol_on_role"
+                                 referencedColumnNames="name"
+                                 referencedTableName="roles"/>
+    </changeSet>
+    <changeSet id="1733378536114-10"
+               author="rahul.shishodia">
+        <addForeignKeyConstraint baseColumnNames="user_id"
+                                 baseTableName="user_roles"
+                                 constraintName="fk_userol_on_user"
+                                 referencedColumnNames="id"
+                                 referencedTableName="users"/>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,35 @@
+services:
+  app:
+    pull_policy: never
+    image: hitpixel-assignment:latest
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    container_name: hitpixel-assignment
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - DB_URL=jdbc:postgresql://db:5432/hitpixel
+      - DB_USERNAME=user
+      - DB_PASSWORD=password
+      - JWT_SIGNING_KEY=50d8ae10b8985c8e30c947692604dda9e52df480771e18d5899b9aaf419e2b7e9a6280ea42d6e15d977573fc8996f5d5a30edbeb059eb3473a1085561313892d
+    depends_on:
+      - db
+    restart: on-failure
+  db:
+    image: postgres:latest
+    container_name: db
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=hitpixel
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+    volumes:
+      - hitpixel-data:/var/lib/postgresql/data
+      - ./src/main/resources/db/init/:/docker-entrypoint-initdb.d/
+    restart: unless-stopped
+volumes:
+  hitpixel-data:
+    driver: local
